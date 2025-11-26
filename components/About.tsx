@@ -20,8 +20,12 @@ export const About: React.FC<AboutProps> = ({ setPage }) => {
                 <div className="absolute inset-0 bg-primary/20 border border-primary/30 rounded-[30px] -rotate-3 translate-x-4 translate-y-4 blur-sm group-hover:blur-md transition-all"></div>
                 
                 {/* Image Placeholder */}
-                <div className="absolute inset-0 rounded-[25px] overflow-hidden border border-white/10 shadow-2xl bg-gray-800">
-                    <img src="./yehuda.jpg" alt="Yehuda Michanie CEO" className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 hover:scale-105 transform" />
+                <div className="absolute inset-0 rounded-[25px] overflow-hidden border border-white/10 shadow-2xl bg-[#141419]">
+                    <img 
+                        src="yehuda.jpg" 
+                        alt="Yehuda Michanie CEO" 
+                        className="w-full h-full object-cover object-top opacity-100 transition-transform duration-700 hover:scale-105" 
+                    />
                 </div>
 
                 {/* Floating Badges */}

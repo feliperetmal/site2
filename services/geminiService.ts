@@ -4,7 +4,19 @@ import { ChatMessage } from "../types";
 // Initialize Gemini Client
 // CRITICAL: API Key must be from process.env.API_KEY.
 // Added fallback check to prevent runtime crash if environment is not set up correctly.
-const apiKey = process.env.API_KEY || '';
+const getApiKey = () => {
+  try {
+    // Check if process is defined (Node.js/Vercel Serverless environment)
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env.API_KEY || '';
+    }
+    return '';
+  } catch (e) {
+    return '';
+  }
+};
+
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey: apiKey });
 
 const MODEL_NAME = 'gemini-2.5-flash';
