@@ -2,8 +2,10 @@ import { GoogleGenAI, Content } from "@google/genai";
 import { ChatMessage } from "../types";
 
 // Initialize Gemini Client
-// CRITICAL: API Key must be from process.env.API_KEY as per instructions.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// CRITICAL: API Key must be from process.env.API_KEY.
+// Added fallback check to prevent runtime crash if environment is not set up correctly.
+const apiKey = process.env.API_KEY || '';
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 const MODEL_NAME = 'gemini-2.5-flash';
 
@@ -12,6 +14,11 @@ export const sendMessageToGemini = async (
   newMessage: string,
   systemInstruction: string
 ): Promise<string> => {
+  if (!apiKey) {
+      console.error("API Key is missing. Please check your .env file or Vercel Environment Variables.");
+      return "⚠️ Erro de Configuração: Chave de API não encontrada. Por favor, avise o administrador do sistema.";
+  }
+
   try {
     // Convert application history format to Gemini Content format
     const contents: Content[] = history.map((msg) => ({
