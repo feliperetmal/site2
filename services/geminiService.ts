@@ -3,15 +3,14 @@ import { ChatMessage } from "../types";
 
 // Initialize Gemini Client
 // CRITICAL: API Key must be from process.env.API_KEY.
-// Added fallback check to prevent runtime crash if environment is not set up correctly.
 const getApiKey = () => {
   try {
-    // Check if process is defined (Node.js/Vercel Serverless environment)
-    if (typeof process !== 'undefined' && process.env) {
-      return process.env.API_KEY || '';
-    }
-    return '';
+    // In Vercel/Vite/Webpack builds, 'process.env.API_KEY' is replaced by the actual string literal at build time.
+    // We access it directly inside a try-catch to handle cases where the object might be missing in strict browser contexts,
+    // although the bundler usually handles the replacement.
+    return process.env.API_KEY || '';
   } catch (e) {
+    console.warn("Failed to access process.env.API_KEY");
     return '';
   }
 };
